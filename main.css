@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #4E4343; /* Fondo gris oscuro para el cuerpo */
+}
+
+header {
+    background-color: #1E3A5F; /* Fondo azul marino para el header */
+    padding: 10px 0;
+    border-radius: 6px;
+    margin: 5px;
+    border: 2px solid #BEB377; /* Borde dorado */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Espacio entre los elementos de la izquierda y derecha */
+    align-items: center;
+    padding: 0 20px; /* Espacio horizontal interno */
+}
+
+.nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: left;
+}
+
+.nav-list li {
+    margin: 0 15px;
+}
+
+.nav-list a {
+    color: white; /* Texto blanco */
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+
+.nav-list a:hover {
+    background-color: #FFC107; /* Fondo amarillo mostaza al pasar el ratón */
+    border-radius: 5px;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.username {
+    color: white;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.5s; /* Transición suave para el giro */
+}
+
+.username:hover {
+    transform: rotateY(180deg); /* Giro de 180 grados al pasar el ratón */
+}
+
+.login-btn {
+    background-color: #FFC107; /* Fondo amarillo mostaza para el botón */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #1E3A5F; /* Texto azul marino */
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #FFD54F; /* Fondo más claro al pasar el ratón */
+}
+
+.info {
+    background-color: #516061; /* Fondo gris azulado para la sección de información */
+    margin: 5px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    color: white; /* Texto blanco */
+    text-align: center;
+}
+
+.papersK {
+    background-color: #667752; /* Fondo verde claro para la sección de artículos */
+    margin: 5px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    color: black; /* Texto negro */
+    text-align: center;
+    display: flex;
+    justify-content: space-between; /* Espacio entre los productos */
+    gap: 10px; /* Espacio entre los globos */
+    flex-wrap: wrap;
+}
+
+.paper {
+    background-color: #2E3A3A; /* Fondo gris oscuro para los globos */
+    margin: 5px;
+    padding: 15px;
+    border-radius: 15px; /* Bordes redondeados */
+    color: white; /* Texto blanco */
+    text-align: left;
+    flex: 1;
+    min-width: 280px; /* Asegura que los globos tengan un tamaño mínimo */
+    max-width: 30%; /* Asegura que se ajusten hasta un máximo del 30% del ancho del contenedor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el efecto de globo */
+}
