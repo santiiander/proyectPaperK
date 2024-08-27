@@ -1,3 +1,11 @@
+document.addEventListener('scroll', function() {
+    const image = document.querySelector('.profile-image');
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    image.style.transform = `rotate(${scrollTop / 2}deg)`; // Ajusta la rotación según la velocidad deseada
+});
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const usernameElement = document.getElementById('username');
     const logoutButton = document.getElementById('logoutButton');
@@ -14,13 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
             logoutButton.addEventListener('click', function() {
                 localStorage.removeItem('username');
                 localStorage.removeItem('access_token'); // Opcional, si también quieres limpiar el token
-                window.location.href = '/login.html';
+                window.location.href = '/plantillas/login.html';
             });
         } else {
             usernameElement.textContent = 'Usuario no autenticado';
             logoutButton.textContent = 'Login'; // Cambia el texto del botón a "Login"
             logoutButton.addEventListener('click', function() {
-                window.location.href = '/login.html';
+                window.location.href = '/plantillas/login.html';
             });
         }
     }

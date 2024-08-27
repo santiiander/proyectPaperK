@@ -5,17 +5,25 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Proyect PaperK</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='/styles/main.css'>
+    <script src='/plantillas/js/main.js' defer></script> <!-- Añadido 'defer' para asegurar que el script se cargue después del HTML -->
 </head>
 <body>
-    <header>
+    <header class="headerLogin">
+        <ul class="ulHeader">
+            <li><a href="">Registrarse</a></li>
+            <li>|</li>
+            <li><a href="">Iniciar sesion</a></li>
+        </ul>
+    </header>
+    <header class="headerPrincipal">
         <nav>
             <div class="navbar">
                 <ul class="nav-list">
-                    <li><a href="/home.html">Inicio</a></li>
-                    <li><a href="/contact.html">Contacto</a></li>
-                    <li><a href="/about.html">About</a></li>
+                    <li class="test"><a href="/home.html">Inicio</a></li>
+                    <li class="test"><a href="/contact.html">Contacto</a></li>
+                    <li class="test"><a href="/about.html">About</a></li>
+                    <li class="test2"><a href=""> <img src="/sapiens/cloud-upload-alt.png" alt="nube" class="nube">Publicar</a></li>
                 </ul>
                 <div id="user-info" class="user-actions">
                     <span id="username" class="username">Nombre de Usuario</span>
@@ -24,11 +32,17 @@
             </div>
         </nav>
     </header>
+
+    <!-- Nueva sección para la imagen -->
+    <div class="profile-image-container">
+        <img src="/sapiens/origami.png" alt="Profile Image" class="profile-image">
+    </div>
+
     <main>
         <section class="info">
             <div class="hero-text">
                 <h1>Bienvenido a PaperK</h1>
-                <p>Un lugar donde los diseñadores y artesanos se unen para crear productos inspiradores.</p>
+                <p>Un lugar donde los diseñadores y artesanos se unen para crear productos y diseños inspiradores.</p>
             </div>
         </section>
         <section class="papersK">

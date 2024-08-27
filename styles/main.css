@@ -1,15 +1,13 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #4E4343; /* Fondo gris oscuro para el cuerpo */
+    background-color: #b9c480; /* Fondo gris oscuro para el cuerpo */
 }
 
-header {
-    background-color: #1E3A5F; /* Fondo azul marino para el header */
+.headerPrincipal {
+    background-color: #484f57; /* Fondo azul marino para el header */
     padding: 10px 0;
-    border-radius: 6px;
-    margin: 5px;
-    border: 2px solid #BEB377; /* Borde dorado */
+    border: wheat 1px solid;
 }
 
 .navbar {
@@ -38,8 +36,13 @@ header {
     display: block;
 }
 
-.nav-list a:hover {
+.test:hover {
     background-color: #FFC107; /* Fondo amarillo mostaza al pasar el ratón */
+    border-radius: 5px;
+}
+
+.test2:hover {
+    background-color: #557eca; /* Fondo amarillo mostaza al pasar el ratón */
     border-radius: 5px;
 }
 
@@ -75,7 +78,7 @@ header {
 }
 
 .info {
-    background-color: #516061; /* Fondo gris azulado para la sección de información */
+    background-color: #414753; /* Fondo gris azulado para la sección de información */
     margin: 5px;
     margin-top: 10px;
     padding: 10px;
@@ -109,4 +112,60 @@ header {
     min-width: 280px; /* Asegura que los globos tengan un tamaño mínimo */
     max-width: 30%; /* Asegura que se ajusten hasta un máximo del 30% del ancho del contenedor */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el efecto de globo */
+}
+
+/* CSS existente */
+
+/* Nuevos estilos añadidos */
+.profile-image-container {
+    display: flex;
+    justify-content: center; /* Centra la imagen horizontalmente */
+    margin-top: 20px; /* Espacio debajo del header */
+}
+
+.profile-image {
+    width: 325px; /* Tamaño del círculo */
+    height: 325px; /* Tamaño del círculo */
+    border-radius: 50%; /* Hace la imagen circular */
+    border: 1px solid #BEB377; /* Contorno fino, puedes ajustar el color si es necesario */
+    transition: transform 0.3s ease; /* Suaviza la rotación */
+}
+
+
+.headerLogin {
+    background-color: rgb(156, 155, 85);
+    display: flex;
+    justify-content: center;
+    padding: 10px 0; /* Espaciado vertical */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+}
+
+.ulHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra verticalmente los elementos */
+    list-style: none; /* Elimina los puntos de lista */
+    padding: 0; /* Elimina el padding */
+    margin: 0; /* Elimina el margen */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+
+.ulHeader a {
+    color: rgb(0, 0, 0); /* Texto blanco */
+    text-decoration: none; /* Elimina el subrayado */
+    padding: 0 20px; /* Espaciado horizontal */
+    display: block;
+    transition: color 0.3s; /* Transición suave para el color */
+    font-size: 15px;
+}
+
+.ulHeader a:hover {
+    color: #FFC107; /* Cambia el color al pasar el ratón */
+}
+
+.nube{
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
 }

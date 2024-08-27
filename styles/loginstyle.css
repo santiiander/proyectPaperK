@@ -1,5 +1,5 @@
 body {
-    background-color: #c4bbbb;
+    background-color: #b9c480;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@ body {
 
 .container {
     max-width: 450px;
-    background-color: #4d2e2e;
+    background-color: #2E3A3A;
     padding: 20px;
     border-radius: 10px;
     color: #fff;
@@ -18,13 +18,27 @@ body {
 }
 
 .container img {
-    width: 200px;
     display: block;
     margin: 0 auto 20px auto;
-
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    border: 2px solid #000000;
+    animation: rotate 10s linear infinite; /* Añade la animación */
+    transition: animation 0.5s ease-in-out; /* Transición suave para la animación */
 }
-img{
-    border: solid black 3px;
+
+.container img:hover {
+    animation-play-state: paused; /* Pausa la animación al pasar el mouse */
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .container h2 {
@@ -36,7 +50,7 @@ img{
 }
 
 .btn-primary {
-    background-color: #9c8b8b;
+    background-color: #3d6172;
     border-color: #526880;
 }
 
