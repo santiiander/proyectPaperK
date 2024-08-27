@@ -23,7 +23,7 @@
                     <li class="test"><a href="/home.html">Inicio</a></li>
                     <li class="test"><a href="/contact.html">Contacto</a></li>
                     <li class="test"><a href="/about.html">About</a></li>
-                    <li class="test2"><a href=""> <img src="/sapiens/cloud-upload-alt.png" alt="nube" class="nube">Publicar</a></li>
+                    <li class="test2"><a href="javascript:void(0)" onclick="openPopup()"> <img src="/sapiens/cloud-upload-alt.png" alt="nube" class="nube">Publicar</a></li>
                 </ul>
                 <div id="user-info" class="user-actions">
                     <span id="username" class="username">Nombre de Usuario</span>
@@ -59,6 +59,28 @@
                 <p>Suspendisse potenti. Mauris et dui eget leo interdum convallis. Nullam facilisis lectus nec mauris feugiat tristique. Fusce cursus nunc in magna luctus, et sodales sem facilisis.</p>
             </div>
         </section>
+        <!-- Popup Formulario -->
+        <div id="popupForm" class="popup-form">
+            <div class="popup-content">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <h2>Agregar Proyecto</h2>
+                <form id="proyectoForm" action="/proyectos/" method="post" enctype="multipart/form-data">
+                    <label for="nombre">Nombre del Proyecto:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+
+                    <label for="archivo_pdf">Subir PDF:</label>
+                    <input type="file" id="archivo_pdf" name="archivo_pdf" accept="application/pdf" required>
+
+                    <label for="imagen">Subir Imagen:</label>
+                    <input type="file" id="imagen" name="imagen" accept="image/*" required>
+
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
     </main>
 </body>
 </html>
