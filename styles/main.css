@@ -241,3 +241,13 @@ body {
 }
 
 
+.paper {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.project-image {
+    max-width: 100%;
+    height: auto;
+}

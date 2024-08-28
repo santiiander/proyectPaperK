@@ -2,13 +2,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config.database import engine, Base, init_db
 from routers import usuario, proyecto
+from fastapi.staticfiles import StaticFiles
+from routers import auth
+from fastapi import Depends
+from middlewares.jwt_bearer import JWTBearer
+
+app = FastAPI()
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 init_db()
 
 # Inicializa la base de datos
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(dependencies=[Depends(JWTBearer())])
 
 # Configuración de CORS
 app.add_middleware(
@@ -24,6 +31,7 @@ app.add_middleware(
 # Incluye los routers
 app.include_router(usuario.router, prefix="/usuarios", tags=["Usuarios"])
 app.include_router(proyecto.router, prefix="/proyectos", tags=["Proyectos"])
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
 
 # Rutas de prueba o iniciales
 @app.get("/")
