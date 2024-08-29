@@ -1,20 +1,20 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #b9c480; /* Fondo gris oscuro para el cuerpo */
+    background-color: #b9c480;
 }
 
 .headerPrincipal {
-    background-color: #484f57; /* Fondo azul marino para el header */
+    background-color: #484f57;
     padding: 10px 0;
     border: wheat 1px solid;
 }
 
 .navbar {
     display: flex;
-    justify-content: space-between; /* Espacio entre los elementos de la izquierda y derecha */
+    justify-content: space-between;
     align-items: center;
-    padding: 0 20px; /* Espacio horizontal interno */
+    padding: 0 20px;
 }
 
 .nav-list {
@@ -30,19 +30,19 @@ body {
 }
 
 .nav-list a {
-    color: white; /* Texto blanco */
+    color: white;
     text-decoration: none;
     padding: 10px 15px;
     display: block;
 }
 
 .test:hover {
-    background-color: #FFC107; /* Fondo amarillo mostaza al pasar el ratón */
+    background-color: #FFC107;
     border-radius: 5px;
 }
 
 .test2:hover {
-    background-color: #557eca; /* Fondo amarillo mostaza al pasar el ratón */
+    background-color: #557eca;
     border-radius: 5px;
 }
 
@@ -55,122 +55,116 @@ body {
     color: white;
     margin-right: 10px;
     cursor: pointer;
-    transition: transform 0.5s; /* Transición suave para el giro */
+    transition: transform 0.5s;
 }
 
 .username:hover {
-    transform: rotateY(180deg); /* Giro de 180 grados al pasar el ratón */
+    transform: rotateY(180deg);
 }
 
 .login-btn {
-    background-color: #FFC107; /* Fondo amarillo mostaza para el botón */
+    background-color: #FFC107;
     border: none;
     padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    color: #1E3A5F; /* Texto azul marino */
+    color: #1E3A5F;
     font-weight: bold;
     transition: background-color 0.3s;
 }
 
 .login-btn:hover {
-    background-color: #FFD54F; /* Fondo más claro al pasar el ratón */
+    background-color: #FFD54F;
 }
 
 .info {
-    background-color: #414753; /* Fondo gris azulado para la sección de información */
+    background-color: #414753;
     margin: 5px;
     margin-top: 10px;
     padding: 10px;
     border-radius: 5px;
-    color: white; /* Texto blanco */
+    color: white;
     text-align: center;
 }
 
 .papersK {
-    background-color: #667752; /* Fondo verde claro para la sección de artículos */
+    background-color: #667752;
     margin: 5px;
     margin-top: 10px;
     padding: 10px;
     border-radius: 5px;
-    color: black; /* Texto negro */
+    color: black;
     text-align: center;
     display: flex;
-    justify-content: space-between; /* Espacio entre los productos */
-    gap: 10px; /* Espacio entre los globos */
+    justify-content: space-between;
+    gap: 10px;
     flex-wrap: wrap;
 }
 
 .paper {
-    background-color: #2E3A3A; /* Fondo gris oscuro para los globos */
+    background-color: #2E3A3A;
     margin: 5px;
     padding: 15px;
-    border-radius: 15px; /* Bordes redondeados */
-    color: white; /* Texto blanco */
+    border-radius: 15px;
+    color: white;
     text-align: left;
     flex: 1;
-    min-width: 280px; /* Asegura que los globos tengan un tamaño mínimo */
-    max-width: 30%; /* Asegura que se ajusten hasta un máximo del 30% del ancho del contenedor */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el efecto de globo */
+    min-width: 280px;
+    max-width: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* CSS existente */
-
-/* Nuevos estilos añadidos */
 .profile-image-container {
     display: flex;
-    justify-content: center; /* Centra la imagen horizontalmente */
-    margin-top: 20px; /* Espacio debajo del header */
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .profile-image {
-    width: 325px; /* Tamaño del círculo */
-    height: 325px; /* Tamaño del círculo */
-    border-radius: 50%; /* Hace la imagen circular */
-    border: 1px solid #BEB377; /* Contorno fino, puedes ajustar el color si es necesario */
-    transition: transform 0.3s ease; /* Suaviza la rotación */
+    width: 325px;
+    height: 325px;
+    border-radius: 50%;
+    border: 1px solid #BEB377;
+    transition: transform 0.3s ease;
 }
-
 
 .headerLogin {
     background-color: rgb(156, 155, 85);
     display: flex;
     justify-content: center;
-    padding: 10px 0; /* Espaciado vertical */
-    width: 100%; /* Asegura que ocupe todo el ancho */
+    padding: 10px 0;
+    width: 100%;
 }
 
 .ulHeader {
     display: flex;
     justify-content: center;
-    align-items: center; /* Centra verticalmente los elementos */
-    list-style: none; /* Elimina los puntos de lista */
-    padding: 0; /* Elimina el padding */
-    margin: 0; /* Elimina el margen */
-    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
-
 .ulHeader a {
-    color: rgb(0, 0, 0); /* Texto blanco */
-    text-decoration: none; /* Elimina el subrayado */
-    padding: 0 20px; /* Espaciado horizontal */
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    padding: 0 20px;
     display: block;
-    transition: color 0.3s; /* Transición suave para el color */
+    transition: color 0.3s;
     font-size: 15px;
 }
 
 .ulHeader a:hover {
-    color: #FFC107; /* Cambia el color al pasar el ratón */
+    color: #FFC107;
 }
 
-.nube{
+.nube {
     width: 15px;
     height: 15px;
     margin-right: 10px;
 }
 
-/* Estilo para el popup */
 .popup-form {
     display: none;
     position: fixed;
@@ -240,7 +234,6 @@ body {
     background-color: #45a049;
 }
 
-
 .paper {
     margin-bottom: 20px;
     padding: 10px;
@@ -250,4 +243,66 @@ body {
 .project-image {
     max-width: 100%;
     height: auto;
+}
+
+.paper {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.paper:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.download-button {
+    background-image: url('/sapiens/descargar.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    display: none;
+    background-color: transparent;
+    color: transparent;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.paper:hover .download-button {
+    display: block;
+}
+
+.paper {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-image, 
+.paper h2, 
+.paper p {
+    transition: opacity 0.3s ease;
+}
+
+.paper:hover .project-image, 
+.paper:hover h2, 
+.paper:hover p {
+    opacity: 0.5;
+}
+
+.paper:hover .download-button {
+    opacity: 1;
 }

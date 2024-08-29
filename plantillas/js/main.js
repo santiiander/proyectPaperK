@@ -10,7 +10,6 @@ function getToken() {
     return token;
 }
 
-
 // Función para cargar los proyectos desde el backend
 function loadProjects() {
     fetch("http://localhost:8000/proyectos/proyectos/traer", {
@@ -35,10 +34,13 @@ function loadProjects() {
         projects.forEach(project => {
             const projectDiv = document.createElement('div');
             projectDiv.className = 'paper';
+            projectDiv.dataset.pdfPath = project.archivo_pdf; // Añadido para almacenar la ruta del PDF
+            
             projectDiv.innerHTML = `
                 <h2>${project.nombre}</h2>
                 <img src="http://localhost:8000/${project.imagen}" alt="Imagen del Proyecto" class="project-image">
                 <p>${project.descripcion}</p>
+                <button class="download-button" onclick="downloadPDF('${project.archivo_pdf}')"></button>
             `;
             container.appendChild(projectDiv);
         });
@@ -46,6 +48,33 @@ function loadProjects() {
     .catch(error => console.error('Error al cargar los proyectos:', error));
 }
 
+// Función para descargar el archivo PDF
+function downloadPDF(pdfPath) {
+    const url = `http://localhost:8000/${pdfPath}`;
+    
+    fetch(url, {
+        headers: {
+            "Authorization": `Bearer ${getToken()}`
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const link = document.createElement('a');
+        const url = window.URL.createObjectURL(blob);
+        link.href = url;
+        link.download = pdfPath.split('/').pop(); // Establece el nombre del archivo basado en la ruta
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Elimina el enlace después de hacer clic
+        window.URL.revokeObjectURL(url); // Libera el objeto URL
+    })
+    .catch(error => console.error('Error al descargar el PDF:', error));
+}
 // Función para crear un nuevo proyecto
 function createProject() {
     const form = document.querySelector('#proyectoForm');
