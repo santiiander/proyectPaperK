@@ -1,12 +1,14 @@
 # Usa una imagen base de Python
 FROM python:3.9-slim
 
-# Instala las dependencias del sistema necesarias para mysqlclient
+# Actualiza el sistema y agrega dependencias
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y \
     build-essential \
     libmysqlclient-dev \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Establece el directorio de trabajo
 WORKDIR /app
