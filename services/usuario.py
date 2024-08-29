@@ -5,7 +5,7 @@ from schemas.usuario import UsuarioCreate, UsuarioLogin
 def crear_usuario(db: Session, usuario: UsuarioCreate):
     db_usuario = Usuario(
         email=usuario.email,
-        hashed_password=usuario.password,  # Manejo de contraseñas sin hash
+        hashed_password=usuario.password,  # Asegúrate de que esta contraseña esté siendo manejada correctamente
         nombre=usuario.nombre,
         descripcion=usuario.descripcion,
     )

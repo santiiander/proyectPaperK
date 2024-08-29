@@ -55,8 +55,7 @@ function createProject() {
         method: "POST",
         body: formData,
         headers: {
-            "Authorization": `Bearer ${getToken()}`,
-            "Content-Type": "multipart/form-data" // Asegúrate de que esto sea correcto para tu backend
+            "Authorization": `Bearer ${getToken()}` // No necesitas especificar Content-Type cuando usas FormData
         }
     })
     .then(response => {
@@ -66,7 +65,7 @@ function createProject() {
             loadProjects(); // Recargar proyectos para ver el nuevo
         } else {
             return response.json().then(result => {
-                throw new Error(result.detail || 'Error creating project');
+                throw new Error(result.detail || 'Error creando proyecto');
             });
         }
     })

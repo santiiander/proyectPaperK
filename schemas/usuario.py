@@ -6,8 +6,14 @@ class UsuarioBase(BaseModel):
     nombre: str
     descripcion: str
 
-class UsuarioCreate(UsuarioBase):
+class UsuarioCreate(BaseModel):
+    email: str
     password: str
+    nombre: str
+    descripcion: str
+
+    class Config:
+        orm_mode = True
 
 class UsuarioLogin(BaseModel):
     email: str

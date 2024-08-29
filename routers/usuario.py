@@ -1,17 +1,18 @@
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, HTTPException, Depends, status, Form
 from sqlalchemy.orm import Session
-from schemas.usuario import UsuarioCreate, UsuarioLogin
+from schemas.usuario import UsuarioCreate, UsuarioLogin, Usuario
 from services.usuario import crear_usuario, autenticar_usuario
 from config import database
-from utilss.jwt_manager import create_token as create_access_token
+from middlewares.jwt_utils import create_access_token
 from datetime import timedelta
+from models.usuario import Usuario
 
 router = APIRouter()
 
 @router.post("/register")
 async def register(usuario: UsuarioCreate, db: Session = Depends(database.get_db)):
     # Verificar si el usuario ya existe
-    existing_user = db.query(Usuario).filter(Usuario.email == usuario.email).first()
+    existing_user = db.query(Usuario).filter(Usuario.email == usuario.email).first()  # Usa el modelo Usuario aquí
     if existing_user:
         raise HTTPException(status_code=400, detail="El usuario ya existe")
     
@@ -20,7 +21,10 @@ async def register(usuario: UsuarioCreate, db: Session = Depends(database.get_db
     return {"message": "Usuario creado exitosamente", "user": user.email}
 
 @router.post("/login")
-async def login(usuario: UsuarioLogin, db: Session = Depends(database.get_db)):
+async def login(
+    usuario: UsuarioLogin,  # Usa UsuarioLogin para recibir los datos en formato JSON
+    db: Session = Depends(database.get_db)
+):
     # Verificar credenciales
     user = autenticar_usuario(db=db, usuario=usuario)
     if not user:

@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from config import database
 from services.usuario import autenticar_usuario
-from middlewares.security import create_access_token
+from middlewares.jwt_utils import create_access_token
 from schemas.usuario import UsuarioLogin
 from datetime import timedelta
 
