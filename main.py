@@ -4,6 +4,7 @@ from config.database import engine, Base, init_db
 from routers import usuario, proyecto, auth
 from fastapi.staticfiles import StaticFiles
 from middlewares.jwt_bearer import JWTBearer
+from textblob import TextBlob
 
 app = FastAPI()
 
