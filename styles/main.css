@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #b9c480;
+    background-color: #969495;
 }
 
 .headerPrincipal {
@@ -88,11 +88,9 @@ body {
 }
 
 .papersK {
-    background-color: #667752;
     margin: 5px;
     margin-top: 10px;
     padding: 10px;
-    border-radius: 5px;
     color: black;
     text-align: center;
     display: flex;
@@ -103,15 +101,84 @@ body {
 
 .paper {
     background-color: #2E3A3A;
-    margin: 5px;
-    padding: 15px;
-    border-radius: 15px;
     color: white;
     text-align: left;
-    flex: 1;
-    min-width: 280px;
-    max-width: 30%;
+    flex: 1 0 22%;
+    margin: 0;
+    max-width: 23%;
+    border: 1px solid white;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    padding: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.paper:hover {
+    transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.download-button {
+    background-image: url('/sapiens/descargar.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    display: none;
+    background-color: transparent;
+    color: transparent;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.paper:hover .download-button {
+    display: block;
+}
+
+.project-image, 
+.paper h2, 
+.paper p {
+    transition: opacity 0.3s ease;
+}
+
+.paper:hover .project-image, 
+.paper:hover h2, 
+.paper:hover p {
+    opacity: 0.5;
+}
+
+.paper:hover .download-button {
+    opacity: 1;
+}
+
+@media (max-width: 800px) {
+    .paper {
+        flex: 1 0 47%;
+        max-width: 48%;
+    }
+}
+
+@media (max-width: 500px) {
+    .paper {
+        flex: 1 0 100%;
+        max-width: 100%;
+    }
 }
 
 .profile-image-container {
@@ -129,7 +196,7 @@ body {
 }
 
 .headerLogin {
-    background-color: rgb(156, 155, 85);
+    background-color: rgb(105, 48, 48);
     display: flex;
     justify-content: center;
     padding: 10px 0;
@@ -147,7 +214,7 @@ body {
 }
 
 .ulHeader a {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     text-decoration: none;
     padding: 0 20px;
     display: block;
@@ -232,77 +299,4 @@ body {
 
 #proyectoForm button:hover {
     background-color: #45a049;
-}
-
-.paper {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-.project-image {
-    max-width: 100%;
-    height: auto;
-}
-
-.paper {
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.paper:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.project-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.download-button {
-    background-image: url('/sapiens/descargar.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 50px;
-    height: 50px;
-    border: none;
-    cursor: pointer;
-    display: none;
-    background-color: transparent;
-    color: transparent;
-    padding: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.paper:hover .download-button {
-    display: block;
-}
-
-.paper {
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.project-image, 
-.paper h2, 
-.paper p {
-    transition: opacity 0.3s ease;
-}
-
-.paper:hover .project-image, 
-.paper:hover h2, 
-.paper:hover p {
-    opacity: 0.5;
-}
-
-.paper:hover .download-button {
-    opacity: 1;
 }

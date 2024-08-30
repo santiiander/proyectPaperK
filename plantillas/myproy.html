@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Proyectos</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='/styles/myproy.css'>
+</head>
+<body>
+    <header>
+        <h1>Mis Proyectos</h1>
+        <div id="userInfo">
+            <span id="userEmail"></span>
+            <button id="logoutButton"></button>
+        </div>
+        <button id="backToHub" onclick="window.location.href='/plantillas/index.html'">Volver al HUB</button>
+    </header>
+
+    <div id="userProjectsContainer" class="projects-grid">
+        <!-- Los proyectos del usuario se cargarán aquí -->
+    </div>
+
+    <script src='/plantillas/js/myproy.js'></script>
+</body>
+</html>

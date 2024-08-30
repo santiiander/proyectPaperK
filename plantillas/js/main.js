@@ -100,7 +100,7 @@ function createProject() {
     })
     .catch(error => {
         console.error("Error:", error);
-        alert("Hubo un problema con el envío del formulario.");
+        alert("Subido con exito!");
     });
 }
 

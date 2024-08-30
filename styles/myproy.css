@@ -1,0 +1,118 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Estilos del encabezado */
+header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+#userInfo {
+    display: flex;
+    align-items: center;
+}
+
+#userEmail {
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+#logoutButton {
+    background-color: #FF4C4C;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#logoutButton:hover {
+    background-color: #FF2C2C;
+}
+
+#backToHub {
+    background-color: #28A745;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#backToHub:hover {
+    background-color: #218838;
+}
+
+/* Estilos de la cuadrícula de proyectos */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.project-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s;
+    border-radius: 5px;
+}
+
+.project-item:hover {
+    transform: translateY(-5px);
+}
+
+.project-item h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #007BFF;
+}
+
+.project-item img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.project-item p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.download-button {
+    background-image: url('/sapiens/edit.png');
+    background-size: cover; /* Ajusta el tamaño de la imagen al contenedor del botón */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    border: none; /* Elimina el borde del botón */
+    width: 40px; /* Ajusta el ancho del botón según el tamaño de la imagen */
+    height: 40px; /* Ajusta la altura del botón según el tamaño de la imagen */
+    cursor: pointer; /* Cambia el cursor para que sea un puntero */
+}
+
