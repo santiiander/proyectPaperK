@@ -12,7 +12,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     console.log('Datos de inicio de sesión:', loginData); // Imprime los datos enviados
 
     try {
-        const response = await fetch('http://localhost:8000/usuarios/login', {
+        const response = await fetch('https://proyectpaperk-production.up.railway.app/usuarios/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

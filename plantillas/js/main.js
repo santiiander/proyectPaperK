@@ -12,7 +12,7 @@ function getToken() {
 
 // Función para cargar los proyectos desde el backend
 function loadProjects() {
-    fetch("http://localhost:8000/proyectos/proyectos/traer", {
+    fetch("https://proyectpaperk-production.up.railway.app/proyectos/proyectos/traer", {
         headers: {
             "Authorization": `Bearer ${getToken()}`
         }
@@ -38,7 +38,7 @@ function loadProjects() {
             
             projectDiv.innerHTML = `
                 <h2>${project.nombre}</h2>
-                <img src="http://localhost:8000/${project.imagen}" alt="Imagen del Proyecto" class="project-image">
+                <img src="https://proyectpaperk-production.up.railway.app/${project.imagen}" alt="Imagen del Proyecto" class="project-image">
                 <p>${project.descripcion}</p>
                 <button class="download-button" onclick="downloadPDF('${project.archivo_pdf}')"></button>
             `;
@@ -50,7 +50,7 @@ function loadProjects() {
 
 // Función para descargar el archivo PDF
 function downloadPDF(pdfPath) {
-    const url = `http://localhost:8000/${pdfPath}`;
+    const url = `https://proyectpaperk-production.up.railway.app/${pdfPath}`;
     
     fetch(url, {
         headers: {
@@ -80,7 +80,7 @@ function createProject() {
     const form = document.querySelector('#proyectoForm');
     const formData = new FormData(form);
 
-    fetch("http://localhost:8000/proyectos/proyectos/", {
+    fetch("https://proyectpaperk-production.up.railway.app/proyectos/proyectos/", {
         method: "POST",
         body: formData,
         headers: {
@@ -169,7 +169,7 @@ function handleLoginResponse(response) {
 function login() {
     const formData = new FormData(document.querySelector('#loginForm'));
 
-    fetch('http://localhost:8000/auth/login', {
+    fetch('https://proyectpaperk-production.up.railway.app/auth/login', {
         method: 'POST',
         body: formData
     })

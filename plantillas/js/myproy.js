@@ -25,7 +25,7 @@ function getToken() {
 
 // Función para cargar los proyectos del usuario desde el backend
 function loadUserProjects() {
-    fetch("http://localhost:8000/proyectos/proyectos/mi-proyecto", {
+    fetch("https://proyectpaperk-production.up.railway.app/proyectos/proyectos/mi-proyecto", {
         headers: {
             "Authorization": `Bearer ${getToken()}`
         }
@@ -51,7 +51,7 @@ function loadUserProjects() {
 
             projectDiv.innerHTML = `
                 <h2>${project.nombre}</h2>
-                <img src="http://localhost:8000/${project.imagen}" alt="Imagen del Proyecto" class="project-image">
+                <img src="https://proyectpaperk-production.up.railway.app/${project.imagen}" alt="Imagen del Proyecto" class="project-image">
                 <p>${project.descripcion}</p>
                 <img src="/sapiens/delete.png" alt="Eliminar" class="delete-button" onclick="showDeletePopup(${project.id})">
             `;
@@ -75,7 +75,7 @@ function closePopup(popupId) {
 
 // Función para eliminar un proyecto
 function deleteProject(projectId) {
-    fetch(`http://localhost:8000/proyectos/proyectos/${projectId}`, {
+    fetch(`https://proyectpaperk-production.up.railway.app/proyectos/proyectos/${projectId}`, {
         method: 'DELETE',
         headers: {
             "Authorization": `Bearer ${getToken()}`

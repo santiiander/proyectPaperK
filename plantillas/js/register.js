@@ -25,7 +25,7 @@ function registerUser() {
     const form = document.getElementById('registerForm');
     const formData = new FormData(form);
 
-    fetch('http://localhost:8000/usuarios/register', {
+    fetch('https://proyectpaperk-production.up.railway.app/usuarios/register', {
         method: 'POST',
         body: JSON.stringify({
             email: formData.get('email'),
