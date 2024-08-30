@@ -46,6 +46,11 @@ body {
     border-radius: 5px;
 }
 
+.test3:hover {
+    background-color: #c24e4e;
+    border-radius: 5px;
+}
+
 .user-actions {
     display: flex;
     align-items: center;
@@ -299,4 +304,102 @@ body {
 
 #proyectoForm button:hover {
     background-color: #45a049;
+}
+
+
+.headerPrincipal {
+    background-color: #484f57;
+    padding: 10px 0;
+    border: wheat 1px solid;
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+}
+
+.navbar {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en la pantalla */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px; /* Ajusta el padding para pantallas pequeñas */
+}
+
+.nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los ítems se envuelvan en pantallas pequeñas */
+    justify-content: center; /* Centra los ítems en pantallas pequeñas */
+}
+
+.nav-list li {
+    margin: 5px; /* Ajusta el margen para pantallas pequeñas */
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    font-size: 14px; /* Reduce el tamaño del texto en pantallas pequeñas */
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    justify-content: center; /* Centra los elementos en pantallas pequeñas */
+}
+
+.username {
+    color: white;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.username:hover {
+    transform: rotateY(180deg);
+}
+
+.login-btn {
+    background-color: #FFC107;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #1E3A5F;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #FFD54F;
+}
+
+@media (max-width: 800px) {
+    .navbar {
+        flex-direction: column; /* Coloca los elementos en columna en pantallas más pequeñas */
+    }
+
+    .nav-list {
+        justify-content: center; /* Centra los ítems de navegación */
+    }
+
+    .user-actions {
+        margin-top: 10px; /* Agrega un margen superior en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 500px) {
+    .nav-list {
+        font-size: 12px; /* Reduce el tamaño del texto en pantallas muy pequeñas */
+    }
+
+    .login-btn {
+        padding: 6px 12px; /* Ajusta el tamaño del botón en pantallas pequeñas */
+    }
+
+    .username {
+        margin-right: 5px; /* Ajusta el margen derecho en pantallas pequeñas */
+    }
 }
