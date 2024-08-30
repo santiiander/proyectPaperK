@@ -2,12 +2,21 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: linear-gradient(45deg, #ff9a9e, #3e7c47, #554077, #7570b9);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     position: relative; /* Required for positioning the back-to-home button */
+}
+
+/* Keyframes for background gradient animation */
+@keyframes gradientBG {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
 }
 
 .main-content {
