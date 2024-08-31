@@ -11,7 +11,7 @@ app = FastAPI()
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500"],  # Permite solicitudes desde esta URL
+    allow_origins=["http://127.0.0.1:5500","https://santiiander.github.io","https://santiiander.github.io/PaperKFront/"],  # Permite solicitudes desde esta URL
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
     allow_headers=["*"],  # Permite todos los encabezados
