@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config.database import engine, Base, init_db
-from routers import usuario, proyecto, auth
+from routers import usuario, proyecto
 from fastapi.staticfiles import StaticFiles
 from middlewares.jwt_bearer import JWTBearer
 #from textblob import TextBlob
@@ -27,7 +27,6 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 # Incluye los routers
 app.include_router(usuario.router, prefix="/usuarios", tags=["Usuarios"])
 app.include_router(proyecto.router, prefix="/proyectos", tags=["Proyectos"])
-app.include_router(auth.router, prefix="/auth", tags=["auth"])
 
 # Rutas de prueba o iniciales
 @app.get("/")
