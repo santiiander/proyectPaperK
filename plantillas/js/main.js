@@ -58,6 +58,12 @@ function downloadPDF(pdfPath) {
         }
     })
     .then(response => {
+        if (response.status === 401) {
+            alert("Sesión expirada. Por favor, inicia sesión de nuevo.");
+            localStorage.removeItem('access_token');
+            window.location.href = '/plantillas/login.html';
+            return;
+        }
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -75,6 +81,7 @@ function downloadPDF(pdfPath) {
     })
     .catch(error => console.error('Error al descargar el PDF:', error));
 }
+
 // Función para crear un nuevo proyecto
 function createProject() {
     const form = document.querySelector('#proyectoForm');
@@ -88,6 +95,12 @@ function createProject() {
         }
     })
     .then(response => {
+        if (response.status === 401) {
+            alert("Sesión expirada. Por favor, inicia sesión de nuevo.");
+            localStorage.removeItem('access_token');
+            window.location.href = '/plantillas/login.html';
+            return;
+        }
         if (response.ok) {
             alert("Proyecto creado exitosamente");
             closePopup();
@@ -100,7 +113,7 @@ function createProject() {
     })
     .catch(error => {
         console.error("Error:", error);
-        alert("Subido con exito!");
+        alert("Error al subir el proyecto. Por favor, intenta de nuevo.");
     });
 }
 
