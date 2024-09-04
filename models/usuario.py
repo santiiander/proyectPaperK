@@ -11,3 +11,4 @@ class Usuario(Base):
     nombre = Column(String(255))
     descripcion = Column(String(255))
     proyectos = relationship("Proyecto", back_populates="usuario")
+    reset_code = Column(Integer, nullable=True)

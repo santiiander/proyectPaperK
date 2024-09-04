@@ -12,9 +12,6 @@ class UsuarioCreate(BaseModel):
     nombre: str
     descripcion: str
 
-    class Config:
-        orm_mode = True
-
 class UsuarioLogin(BaseModel):
     email: str
     password: str
