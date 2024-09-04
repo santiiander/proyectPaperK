@@ -4,14 +4,14 @@ from email.mime.text import MIMEText
 def send_reset_password_email(to_email: str, verification_code: str):
     msg = MIMEText(f"Tu código de verificación para restablecer la contraseña es: {verification_code}")
     msg['Subject'] = 'Recuperación de contraseña'
-    msg['From'] = 'santiagoandermatten1@gmail.com'
+    msg['From'] = 'santiagoandermattendev@gmail.com'
     msg['To'] = to_email
 
     # Configuración del servidor SMTP de Gmail
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
-    smtp_user = 'santiagoandermatten1@gmail.com'  # Reemplaza con tu correo electrónico de Gmail
-    smtp_password = 'erns lrvu hwrv fqec'  # Reemplaza con la contraseña de la aplicación o tu contraseña
+    smtp_user = 'santiagoandermattendev@gmail.com'  # Reemplaza con tu correo electrónico de Gmail
+    smtp_password = 'spjl spck qpgk hgap'  # Reemplaza con la contraseña de la aplicación o tu contraseña
 
     # Enviar el correo electrónico
     with smtplib.SMTP(smtp_server, smtp_port) as server:
