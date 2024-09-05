@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Path, Query
 from sqlalchemy.orm import Session
+import os
 from config import database
 from schemas.proyecto import ProyectoBase, Proyecto
 from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto
@@ -20,12 +21,17 @@ def crear_proyecto_view(
     current_user: Usuario = Depends(get_current_user)
 ):
     try:
-        user_folder = f"/uploads/{current_user.id}"
+        # Define the user folder path
+        user_folder = f"uploads/{current_user.id}"
+        
+        # Create the directory if it does not exist
+        os.makedirs(user_folder, exist_ok=True)
 
-        archivo_pdf_path = f"{user_folder}/{archivo_pdf.filename}"
-        imagen_path = f"{user_folder}/{imagen.filename}"
+        # Define file paths
+        archivo_pdf_path = os.path.join(user_folder, archivo_pdf.filename)
+        imagen_path = os.path.join(user_folder, imagen.filename)
 
-        # Guardar archivos en el sistema de archivos local
+        # Save the files to the local filesystem
         with open(archivo_pdf_path, "wb") as f:
             f.write(archivo_pdf.file.read())
 
@@ -35,8 +41,8 @@ def crear_proyecto_view(
         proyecto_data = ProyectoBase(
             nombre=nombre,
             descripcion=descripcion,
-            archivo_pdf=archivo_pdf_path,  # Usa la ruta del archivo local
-            imagen=imagen_path  # Usa la ruta de la imagen local
+            archivo_pdf=archivo_pdf_path,  # Use the local file path
+            imagen=imagen_path  # Use the local file path
         )
         return crear_proyecto(db=db, proyecto=proyecto_data, user_id=current_user.id)
 
@@ -60,8 +66,11 @@ def get_proyectos_view(
 # Obtener Proyectos del Usuario Actual
 @router.get("/proyectos/mi-proyecto", response_model=list[Proyecto], dependencies=[Depends(JWTBearer())])
 def get_mis_proyectos_view(db: Session = Depends(database.get_db), current_user: Usuario = Depends(get_current_user)):
-    result = get_proyectos_por_usuario(db, current_user.id)
-    return result
+    try:
+        result = get_proyectos_por_usuario(db, current_user.id)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Eliminar Proyecto
 @router.delete("/proyectos/{project_id}", response_model=Proyecto, dependencies=[Depends(JWTBearer())])
