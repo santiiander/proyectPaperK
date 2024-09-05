@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Path, Query
 from sqlalchemy.orm import Session
 import requests
+import os
 from config import database
 from schemas.proyecto import ProyectoBase, Proyecto
 from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto
@@ -10,7 +11,6 @@ from middlewares.jwt_bearer import JWTBearer
 
 router = APIRouter()
 
-# Configura tu token y URL de servidor de GoFile aquí
 API_TOKEN = "n0DA0JHfq6UmzUlIigmejhE8Jke3gVc6"
 GOFILE_SERVER_URL = "https://store1.gofile.io/contents/uploadfile"  # Usa un servidor GoFile adecuado
 
@@ -22,12 +22,7 @@ def upload_to_gofile(file: UploadFile):
         response = requests.post(GOFILE_SERVER_URL, files=files, headers=headers)
         response_data = response.json()
         
-        print("Código de estado:", response.status_code)
-        print("Contenido de la respuesta:", response_data)
-        
         if response_data['status'] == "ok":
-            # Verifica el contenido completo de response_data
-            print("Datos de la respuesta:", response_data['data'])
             return response_data['data']['downloadPage']  # Devuelve el enlace de descarga
         else:
             raise Exception(f"Error al subir archivo: {response_data['status']}")
