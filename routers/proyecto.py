@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Path, Query
 from sqlalchemy.orm import Session
-import requests
-import base64
+import os
 from config import database
 from schemas.proyecto import ProyectoBase, Proyecto
 from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto
@@ -10,28 +9,6 @@ from middlewares.jwt_utils import get_current_user
 from middlewares.jwt_bearer import JWTBearer
 
 router = APIRouter()
-
-# Tu token de GitHub
-GITHUB_TOKEN = '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'
-GITHUB_REPO = 'santiiander/PaperKFront'  # Reemplaza con tu usuario y nombre de repositorio
-
-def upload_to_github(file_content: bytes, file_path: str, commit_message: str, branch: str = 'main') -> bool:
-    url = f'https://api.github.com/repos/{GITHUB_REPO}/contents/{file_path}'
-    encoded_content = base64.b64encode(file_content).decode('utf-8')
-
-    data = {
-        'message': commit_message,
-        'branch': branch,
-        'content': encoded_content
-    }
-
-    headers = {
-        'Authorization': f'token {GITHUB_TOKEN}',
-        'Accept': 'application/vnd.github.v3+json'
-    }
-
-    response = requests.put(url, json=data, headers=headers)
-    return response.status_code == 201
 
 # Crear Proyecto
 @router.post("/proyectos/", response_model=Proyecto, dependencies=[Depends(JWTBearer())])
@@ -44,22 +21,28 @@ def crear_proyecto_view(
     current_user: Usuario = Depends(get_current_user)
 ):
     try:
+        # Define the user folder path
+        user_folder = f"uploads/{current_user.id}"
+        
+        # Create the directory if it does not exist
+        os.makedirs(user_folder, exist_ok=True)
+
         # Define file paths
-        pdf_path = f"{current_user.id}/{archivo_pdf.filename}"
-        img_path = f"{current_user.id}/{imagen.filename}"
+        archivo_pdf_path = os.path.join(user_folder, archivo_pdf.filename)
+        imagen_path = os.path.join(user_folder, imagen.filename)
 
-        # Upload files to GitHub
-        pdf_uploaded = upload_to_github(archivo_pdf.file.read(), pdf_path, "Subir archivo PDF")
-        img_uploaded = upload_to_github(imagen.file.read(), img_path, "Subir imagen")
+        # Save the files to the local filesystem
+        with open(archivo_pdf_path, "wb") as f:
+            f.write(archivo_pdf.file.read())
 
-        if not pdf_uploaded or not img_uploaded:
-            raise HTTPException(status_code=500, detail="Error al subir archivos a GitHub")
+        with open(imagen_path, "wb") as f:
+            f.write(imagen.file.read())
 
         proyecto_data = ProyectoBase(
             nombre=nombre,
             descripcion=descripcion,
-            archivo_pdf=pdf_path,  # Use the GitHub file path
-            imagen=img_path  # Use the GitHub file path
+            archivo_pdf=archivo_pdf_path,  # Use the local file path
+            imagen=imagen_path  # Use the local file path
         )
         return crear_proyecto(db=db, proyecto=proyecto_data, user_id=current_user.id)
 
