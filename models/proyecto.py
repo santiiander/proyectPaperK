@@ -10,6 +10,7 @@ class Proyecto(Base):
     descripcion = Column(String)
     archivo_pdf = Column(String)
     imagen = Column(String)
-    usuario_id = Column(Integer, ForeignKey('users.id'))
+    usuario_nombre = Column(String)
+    user_id = Column(Integer, ForeignKey('users.id'))
 
     usuario = relationship("Usuario", back_populates="proyectos")
