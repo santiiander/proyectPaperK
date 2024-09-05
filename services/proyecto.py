@@ -7,7 +7,8 @@ def crear_proyecto(db: Session, proyecto: ProyectoBase, user_id: int):
         nombre=proyecto.nombre,
         descripcion=proyecto.descripcion,
         archivo_pdf=proyecto.archivo_pdf,
-        imagen=proyecto.imagen
+        imagen=proyecto.imagen,
+        user_id=user_id
     )
     db.add(db_proyecto)
     db.commit()
