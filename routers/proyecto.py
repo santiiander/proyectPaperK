@@ -26,6 +26,8 @@ def upload_to_gofile(file: UploadFile):
         print("Contenido de la respuesta:", response_data)
         
         if response_data['status'] == "ok":
+            # Verifica el contenido completo de response_data
+            print("Datos de la respuesta:", response_data['data'])
             return response_data['data']['downloadPage']  # Devuelve el enlace de descarga
         else:
             raise Exception(f"Error al subir archivo: {response_data['status']}")
