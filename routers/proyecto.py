@@ -13,6 +13,7 @@ router = APIRouter()
 # Crear Proyecto
 @router.post("/proyectos/", response_model=Proyecto, dependencies=[Depends(JWTBearer())])
 def crear_proyecto_view(
+    usuario_nombre : str = Form(...),
     nombre: str = Form(...),
     descripcion: str = Form(...),
     archivo_pdf: UploadFile = File(...),
@@ -42,7 +43,8 @@ def crear_proyecto_view(
             nombre=nombre,
             descripcion=descripcion,
             archivo_pdf=archivo_pdf_path,  # Use the local file path
-            imagen=imagen_path  # Use the local file path
+            imagen=imagen_path,  # Use the local file path
+            usuario_nombre=usuario_nombre
         )
         return crear_proyecto(db=db, proyecto=proyecto_data, user_id=current_user.id)
 
