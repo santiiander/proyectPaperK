@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Path, Query
 from sqlalchemy.orm import Session
 import requests
-import os
 from config import database
 from schemas.proyecto import ProyectoBase, Proyecto
 from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto
@@ -11,6 +10,7 @@ from middlewares.jwt_bearer import JWTBearer
 
 router = APIRouter()
 
+# Configura tu token y URL de servidor de GoFile aquí
 API_TOKEN = "n0DA0JHfq6UmzUlIigmejhE8Jke3gVc6"
 GOFILE_SERVER_URL = "https://store1.gofile.io/contents/uploadfile"  # Usa un servidor GoFile adecuado
 
