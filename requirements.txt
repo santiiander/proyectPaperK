@@ -4,7 +4,6 @@ uvicorn
 sqlalchemy
 mysql-connector-python
 pydantic
-python-jose
 bcrypt
 aiofiles
 jinja2
@@ -14,3 +13,4 @@ httpx
 python-jose
 PyJWT
 requests
+python-dotenv
