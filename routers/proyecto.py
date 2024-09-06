@@ -9,7 +9,7 @@ from models.usuario import Usuario
 from middlewares.jwt_utils import get_current_user
 from middlewares.jwt_bearer import JWTBearer
 from dotenv import load_dotenv
-#Comentario
+#Comentario CAMBIO TOKE
 load_dotenv()
 router = APIRouter()
 
@@ -49,19 +49,40 @@ def crear_proyecto_view(
 
         # Subir archivos a GitHub
         def upload_to_github(local_path, repo_path):
+            # Revisa si el archivo ya existe en GitHub
+            url = f'https://api.github.com/repos/{GITHUB_REPO}/contents/{repo_path}'
+            headers = {
+                'Authorization': f'token {GITHUB_TOKEN}',
+                'Content-Type': 'application/json'
+            }
+            
+            # Intentar obtener la información del archivo para ver si ya existe
+            response = requests.get(url, headers=headers)
+            file_exists = response.status_code == 200
+            
             with open(local_path, 'rb') as f:
                 content = base64.b64encode(f.read()).decode('utf-8')  # Codificar contenido a base64
-                url = GITHUB_API_URL.format(GITHUB_REPO, repo_path)
-                headers = {
-                    'Authorization': f'token {GITHUB_TOKEN}',
-                    'Content-Type': 'application/json'
+            
+            if file_exists:
+                # Obtener el sha del archivo existente para actualizarlo
+                file_info = response.json()
+                sha = file_info['sha']
+                json_data = {
+                    'message': f'Update {repo_path}',
+                    'content': content,
+                    'sha': sha
                 }
-                response = requests.put(url, headers=headers, json={
+            else:
+                # Crear el archivo si no existe
+                json_data = {
                     'message': f'Add {repo_path}',
                     'content': content
-                })
-                if response.status_code != 201:
-                    raise HTTPException(status_code=response.status_code, detail=response.text)
+                }
+            
+            # Subir el archivo a GitHub
+            response = requests.put(url, headers=headers, json=json_data)
+            if response.status_code not in [200, 201]:
+                raise HTTPException(status_code=response.status_code, detail=response.text)
 
         # Define GitHub paths respetando la estructura de carpetas
         archivo_pdf_github_path = f"{user_folder}/{archivo_pdf.filename}"
