@@ -9,7 +9,8 @@ from models.usuario import Usuario
 from middlewares.jwt_utils import get_current_user
 from middlewares.jwt_bearer import JWTBearer
 from dotenv import load_dotenv
-
+#Comentario
+load_dotenv()
 router = APIRouter()
 
 # Configura tu token de GitHub y el repositorio
