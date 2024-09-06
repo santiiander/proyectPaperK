@@ -8,11 +8,12 @@ from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_u
 from models.usuario import Usuario
 from middlewares.jwt_utils import get_current_user
 from middlewares.jwt_bearer import JWTBearer
+from dotenv import load_dotenv
 
 router = APIRouter()
 
 # Configura tu token de GitHub y el repositorio
-GITHUB_TOKEN = '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'
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_REPO = 'santiiander/proyectPaperK'
 GITHUB_API_URL = 'https://api.github.com/repos/{}/contents/{}'
 
