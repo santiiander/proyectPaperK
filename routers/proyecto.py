@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Path, Query
 from sqlalchemy.orm import Session
 import os
+import base64, requests
 from config import database
 from schemas.proyecto import ProyectoBase, Proyecto
 from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto
@@ -10,10 +11,15 @@ from middlewares.jwt_bearer import JWTBearer
 
 router = APIRouter()
 
+# Configura tu token de GitHub y el repositorio
+GITHUB_TOKEN = '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'
+GITHUB_REPO = 'santiiander/proyectPaperK'
+GITHUB_API_URL = 'https://api.github.com/repos/{}/contents/{}'
+
 # Crear Proyecto
 @router.post("/proyectos/", response_model=Proyecto, dependencies=[Depends(JWTBearer())])
 def crear_proyecto_view(
-    usuario_nombre : str = Form(...),
+    usuario_nombre: str = Form(...),
     nombre: str = Form(...),
     descripcion: str = Form(...),
     archivo_pdf: UploadFile = File(...),
@@ -39,11 +45,35 @@ def crear_proyecto_view(
         with open(imagen_path, "wb") as f:
             f.write(imagen.file.read())
 
+        # Subir archivos a GitHub
+        def upload_to_github(local_path, repo_path):
+            with open(local_path, 'rb') as f:
+                content = base64.b64encode(f.read()).decode('utf-8')  # Codificar contenido a base64
+                url = GITHUB_API_URL.format(GITHUB_REPO, repo_path)
+                headers = {
+                    'Authorization': f'token {GITHUB_TOKEN}',
+                    'Content-Type': 'application/json'
+                }
+                response = requests.put(url, headers=headers, json={
+                    'message': f'Add {repo_path}',
+                    'content': content
+                })
+                if response.status_code != 201:
+                    raise HTTPException(status_code=response.status_code, detail=response.text)
+
+        # Define GitHub paths respetando la estructura de carpetas
+        archivo_pdf_github_path = f"{user_folder}/{archivo_pdf.filename}"
+        imagen_github_path = f"{user_folder}/{imagen.filename}"
+
+        # Upload files to GitHub
+        upload_to_github(archivo_pdf_path, archivo_pdf_github_path)
+        upload_to_github(imagen_path, imagen_github_path)
+
         proyecto_data = ProyectoBase(
             nombre=nombre,
             descripcion=descripcion,
-            archivo_pdf=archivo_pdf_path,  # Use the local file path
-            imagen=imagen_path,  # Use the local file path
+            archivo_pdf=archivo_pdf_github_path,  # Use the GitHub file path
+            imagen=imagen_github_path,  # Use the GitHub file path
             usuario_nombre=usuario_nombre
         )
         return crear_proyecto(db=db, proyecto=proyecto_data, user_id=current_user.id)
