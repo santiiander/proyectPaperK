@@ -14,4 +14,3 @@ httpx
 python-jose
 PyJWT
 requests
-base64
