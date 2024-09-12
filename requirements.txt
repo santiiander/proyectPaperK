@@ -14,3 +14,4 @@ python-jose
 PyJWT
 requests
 python-dotenv
+firebase-admin
