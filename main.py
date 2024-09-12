@@ -4,14 +4,39 @@ from config.database import engine, Base, init_db
 from routers import usuario, proyecto
 from fastapi.staticfiles import StaticFiles
 from middlewares.jwt_bearer import JWTBearer
-#from textblob import TextBlob
-#cambios
+from dotenv import load_dotenv
+import os
+import firebase_admin
+from firebase_admin import credentials
+
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
+
+# Obtener la configuración de Firebase desde las variables de entorno
+firebase_config = {
+    "type": os.getenv("FIREBASE_TYPE"),
+    "project_id": os.getenv("FIREBASE_PROJECT_ID"),
+    "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
+    "private_key": os.getenv("FIREBASE_PRIVATE_KEY").replace('\\n', '\n'),  # Asegúrate de reemplazar \n por saltos de línea
+    "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
+    "client_id": os.getenv("FIREBASE_CLIENT_ID"),
+    "auth_uri": os.getenv("FIREBASE_AUTH_URI"),
+    "token_uri": os.getenv("FIREBASE_TOKEN_URI"),
+    "auth_provider_x509_cert_url": os.getenv("FIREBASE_AUTH_PROVIDER_X509_CERT_URL"),
+    "client_x509_cert_url": os.getenv("FIREBASE_CLIENT_X509_CERT_URL"),
+    "universe_domain": os.getenv("FIREBASE_UNIVERSE_DOMAIN")
+}
+
+# Inicializar Firebase
+cred = credentials.Certificate(firebase_config)
+firebase_admin.initialize_app(cred)
+
 app = FastAPI()
 
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500","https://santiiander.github.io","https://santiiander.github.io/PaperKFront/"],  # Permite solicitudes desde esta URL
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
     allow_headers=["*"],  # Permite todos los encabezados
