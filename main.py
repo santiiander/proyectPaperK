@@ -4,13 +4,6 @@ from config.database import engine, Base, init_db
 from routers import usuario, proyecto
 from fastapi.staticfiles import StaticFiles
 from middlewares.jwt_bearer import JWTBearer
-# En el archivo principal de tu aplicación
-import firebase_admin
-from firebase_admin import credentials
-
-cred = credentials.Certificate('config/firebase-service-account-key.json')
-firebase_admin.initialize_app(cred)
-
 #from textblob import TextBlob
 #cambios
 app = FastAPI()
@@ -18,8 +11,7 @@ app = FastAPI()
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    #allow_origins=["http://127.0.0.1:5500","http://127.0.0.1:8000","https://santiiander.github.io","https://santiiander.github.io/PaperKFront/"],  # Permite solicitudes desde esta URL
-    allow_origins=["*"],
+    allow_origins=["http://127.0.0.1:5500","https://santiiander.github.io","https://santiiander.github.io/PaperKFront/"],  # Permite solicitudes desde esta URL
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
     allow_headers=["*"],  # Permite todos los encabezados
