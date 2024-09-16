@@ -9,6 +9,7 @@ class ProyectoBase(BaseModel):
 
 class Proyecto(ProyectoBase):
     id: int
+    descargas: int  # Incluye el número de descargas
 
     class Config:
         orm_mode = True

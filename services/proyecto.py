@@ -29,3 +29,11 @@ def eliminar_proyecto(db: Session, proyecto_id: int, user_id: int):
         db.commit()
         return proyecto
     return None
+
+def incrementar_descargas(db: Session, proyecto_id: int):
+    proyecto = db.query(Proyecto).filter(Proyecto.id == proyecto_id).first()
+    if proyecto:
+        proyecto.descargas += 1
+        db.commit()
+        return proyecto
+    return None

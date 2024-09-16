@@ -4,7 +4,7 @@ import os
 import base64, requests
 from config import database
 from schemas.proyecto import ProyectoBase, Proyecto
-from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto
+from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto,incrementar_descargas
 from models.usuario import Usuario
 from middlewares.jwt_utils import get_current_user
 from middlewares.jwt_bearer import JWTBearer
@@ -141,5 +141,23 @@ def eliminar_proyecto_view(
         return eliminado
     except HTTPException as e:
         raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/proyectos/{project_id}", response_model=Proyecto)
+def incrementar_descarga(
+    project_id: int = Path(..., title="ID del proyecto"),
+    db: Session = Depends(database.get_db)
+):
+    try:
+        # Incrementar el contador de descargas
+        proyecto = incrementar_descargas(db, project_id)
+        
+        if not proyecto:
+            raise HTTPException(status_code=404, detail="Proyecto no encontrado")
+
+        # Convertir el proyecto a un esquema Pydantic para la respuesta
+        return proyecto
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -12,5 +12,6 @@ class Proyecto(Base):
     imagen = Column(String)
     usuario_nombre = Column(String)
     user_id = Column(Integer, ForeignKey('users.id'))
+    descargas = Column(Integer, default=0)  # Nuevo campo para contar las descargas
 
     usuario = relationship("Usuario", back_populates="proyectos")
