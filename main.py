@@ -36,7 +36,10 @@ app = FastAPI()
 # Configuración de CORS
 origins = [
     "https://proyectpaperk.store",
-    "http://localhost:8000",  # Add this if you're also developing locally
+    "http://localhost:8000",
+    "https://proyectpaperk.store",
+    "https://santiiander.github.io/PaperKFront/"
+      # Add this if you're also developing locally
 ]
 
 app.add_middleware(
