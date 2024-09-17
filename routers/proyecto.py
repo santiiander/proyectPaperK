@@ -4,7 +4,7 @@ import os
 import base64, requests
 from config import database
 from schemas.proyecto import FeaturedProjects, ProyectoBase, Proyecto
-from services.proyecto import crear_proyecto, get_featured_projects, get_project_likes, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto,incrementar_descargas, toggle_like
+from services.proyecto import crear_proyecto, get_featured_projects, get_project_likes, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto,incrementar_descargas, toggle_like,get_proyectos_explicitos
 from models.usuario import Usuario
 from middlewares.jwt_utils import get_current_user
 from middlewares.jwt_bearer import JWTBearer
@@ -18,6 +18,19 @@ GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_REPO = 'santiiander/proyectPaperK'
 GITHUB_API_URL = 'https://api.github.com/repos/{}/contents/{}'
 
+@router.get("/proyectos/explicitos", response_model=list[Proyecto], dependencies=[Depends(JWTBearer())])
+def get_proyectos_explicitos_view(
+    page: int = Query(1, ge=1), 
+    size: int = Query(12, ge=1), 
+    db: Session = Depends(database.get_db)
+):
+    try:
+        offset = (page - 1) * size
+        proyectos = get_proyectos_explicitos(db, offset=offset, limit=size)
+        return proyectos
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Crear Proyecto
 @router.post("/proyectos/", response_model=Proyecto, dependencies=[Depends(JWTBearer())])
 def crear_proyecto_view(
@@ -26,6 +39,7 @@ def crear_proyecto_view(
     descripcion: str = Form(...),
     archivo_pdf: UploadFile = File(...),
     imagen: UploadFile = File(...),
+    contenido_explicito: bool = Form(...),
     db: Session = Depends(database.get_db),
     current_user: Usuario = Depends(get_current_user)
 ):
@@ -97,7 +111,8 @@ def crear_proyecto_view(
             descripcion=descripcion,
             archivo_pdf=archivo_pdf_github_path,  # Use the GitHub file path
             imagen=imagen_github_path,  # Use the GitHub file path
-            usuario_nombre=usuario_nombre
+            usuario_nombre=usuario_nombre,
+            contenido_explicito=contenido_explicito  # Add the new field
         )
         return crear_proyecto(db=db, proyecto=proyecto_data, user_id=current_user.id)
 
