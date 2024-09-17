@@ -7,15 +7,14 @@ class ProyectoBase(BaseModel):
     archivo_pdf: str
     imagen: str
     usuario_nombre: str
-    contenido_explicito: bool
 
 class Proyecto(ProyectoBase):
     id: int
     descargas: int
-    likes_count: int = 0
+    likes_count: int = 0  # Añadimos este campo para los likes
 
     class Config:
-        from_attributes = True
+        from_attributes = True  # Cambiamos orm_mode a from_attributes para versiones recientes de Pydantic
 
 class FeaturedProjects(BaseModel):
     most_liked: Optional[Proyecto] = None

@@ -17,7 +17,7 @@ firebase_config = {
     "type": os.getenv("FIREBASE_TYPE"),
     "project_id": os.getenv("FIREBASE_PROJECT_ID"),
     "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
-    "private_key": os.getenv("FIREBASE_PRIVATE_KEY").replace('\\n', '\n'),
+    "private_key": os.getenv("FIREBASE_PRIVATE_KEY").replace('\\n', '\n'),  # Asegúrate de reemplazar \n por saltos de línea
     "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
     "client_id": os.getenv("FIREBASE_CLIENT_ID"),
     "auth_uri": os.getenv("FIREBASE_AUTH_URI"),
@@ -34,20 +34,12 @@ firebase_admin.initialize_app(cred)
 app = FastAPI()
 
 # Configuración de CORS
-origins = [
-    "https://proyectpaperk.store",
-    "http://localhost:8000",
-    "https://proyectpaperk.store",
-    "https://santiiander.github.io/PaperKFront/"
-      # Add this if you're also developing locally
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permite todos los encabezados
 )
 
 # Inicializa la base de datos
@@ -65,6 +57,7 @@ app.include_router(proyecto.router, prefix="/proyectos", tags=["Proyectos"])
 @app.get("/")
 def read_root():
     return {"message": "Bienvenido a la API de proyectos de origami"}
+
 
 @app.get("/firebase-config")
 async def get_firebase_config():

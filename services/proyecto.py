@@ -13,16 +13,13 @@ def crear_proyecto(db: Session, proyecto: ProyectoBase, user_id: int):
         archivo_pdf=proyecto.archivo_pdf,
         imagen=proyecto.imagen,
         user_id=user_id,
-        usuario_nombre=proyecto.usuario_nombre,
-        contenido_explicito=proyecto.contenido_explicito
+        usuario_nombre=proyecto.usuario_nombre  # Usar nombre en lugar de user_id
     )
     db.add(db_proyecto)
     db.commit()
     db.refresh(db_proyecto)
     return db_proyecto
 
-def get_proyectos_explicitos(db: Session, offset: int = 0, limit: int = 10):
-    return db.query(Proyecto).filter(Proyecto.contenido_explicito == True).offset(offset).limit(limit).all()
 
 def get_proyectos(db: Session, offset: int = 0, limit: int = 10):
     return db.query(Proyecto).offset(offset).limit(limit).all()
