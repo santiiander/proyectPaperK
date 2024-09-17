@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 import os
 import base64, requests
 from config import database
-from schemas.proyecto import ProyectoBase, Proyecto
-from services.proyecto import crear_proyecto, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto,incrementar_descargas
+from schemas.proyecto import FeaturedProjects, ProyectoBase, Proyecto
+from services.proyecto import crear_proyecto, get_featured_projects, get_project_likes, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto,incrementar_descargas, toggle_like
 from models.usuario import Usuario
 from middlewares.jwt_utils import get_current_user
 from middlewares.jwt_bearer import JWTBearer
@@ -159,5 +159,40 @@ def incrementar_descarga(
         # Convertir el proyecto a un esquema Pydantic para la respuesta
         return proyecto
 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/proyectos/{project_id}/like", response_model=Proyecto, dependencies=[Depends(JWTBearer())])
+def toggle_like_proyecto(
+    project_id: int = Path(..., title="ID del proyecto"),
+    db: Session = Depends(database.get_db),
+    current_user: Usuario = Depends(get_current_user)
+):
+    try:
+        proyecto = toggle_like(db, project_id, current_user.id)
+        if not proyecto:
+            raise HTTPException(status_code=404, detail="Proyecto no encontrado")
+        return proyecto
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/proyectos/{project_id}/likes", response_model=int, dependencies=[Depends(JWTBearer())])
+def get_proyecto_likes(
+    project_id: int = Path(..., title="ID del proyecto"),
+    db: Session = Depends(database.get_db)
+):
+    try:
+        likes = get_project_likes(db, project_id)
+        if likes is None:
+            raise HTTPException(status_code=404, detail="Proyecto no encontrado")
+        return likes
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/proyectos/destacados", response_model=FeaturedProjects, dependencies=[Depends(JWTBearer())])
+def get_proyectos_destacados(db: Session = Depends(database.get_db)):
+    try:
+        featured_projects = get_featured_projects(db)
+        return FeaturedProjects(**featured_projects)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
