@@ -15,7 +15,7 @@ class Proyecto(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     descargas = Column(Integer, default=0)
     likes_count = Column(Integer, default=0)
-    contenido_sensible = Column(Boolean, default=False)  # New field
+    contenido_sensible = Column(Integer, default=0)  # New field
 
     usuario = relationship("Usuario", back_populates="proyectos")
     liked_by_users = relationship("Usuario", secondary=likes_table, back_populates="liked_projects")

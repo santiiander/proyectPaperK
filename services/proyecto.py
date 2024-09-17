@@ -23,7 +23,7 @@ def crear_proyecto(db: Session, proyecto: ProyectoBase, user_id: int):
 
 # Add a new function to get sensitive content projects
 def get_proyectos_sensibles(db: Session, offset: int = 0, limit: int = 10):
-    return db.query(Proyecto).filter(Proyecto.contenido_sensible == True).offset(offset).limit(limit).all()
+    return db.query(Proyecto).filter(Proyecto.contenido_sensible == 1).offset(offset).limit(limit).all()
 
 
 def get_proyectos(db: Session, offset: int = 0, limit: int = 10):
