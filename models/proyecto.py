@@ -7,11 +7,11 @@ class Proyecto(Base):
     __tablename__ = "proyectos"
 
     id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String, index=True)
-    descripcion = Column(String)
-    archivo_pdf = Column(String)
-    imagen = Column(String)
-    usuario_nombre = Column(String)
+    nombre = Column(String(255), index=True)
+    descripcion = Column(String(255))
+    archivo_pdf = Column(String(255))
+    imagen = Column(String(255))
+    usuario_nombre = Column(String(255))
     user_id = Column(Integer, ForeignKey('users.id'))
     descargas = Column(Integer, default=0)
     likes_count = Column(Integer, default=0)

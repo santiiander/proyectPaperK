@@ -3,7 +3,7 @@ from typing import Generator
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 # Cambia a mysql+mysqlconnector para usar el controlador correcto
-DATABASE_URL = "mysql+mysqlconnector://root:EoKjoMdSXvhXRVqUtNOXxsrIIohDiqQT@autorack.proxy.rlwy.net:15617/railway"
+DATABASE_URL = "mysql+mysqlconnector://root:DILatLZGgqQCqPQnKbTnoGANnNtWifyJ@autorack.proxy.rlwy.net:13514/railway"
 #Comentarionuevo con db  test comentario xd
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
