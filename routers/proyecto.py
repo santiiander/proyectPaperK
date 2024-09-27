@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Path, Query
 from sqlalchemy.orm import Session
 import os
-import base64, requests
+import base64
+import requests
 from config import database
 from schemas.proyecto import FeaturedProjects, ProyectoBase, Proyecto
-from services.proyecto import crear_proyecto, get_featured_projects, get_project_likes, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto, get_proyectos_sensibles,incrementar_descargas, toggle_like
+from services.proyecto import crear_proyecto, get_featured_projects, get_project_likes, get_proyectos, get_proyectos_por_usuario, eliminar_proyecto, get_proyectos_sensibles, incrementar_descargas, toggle_like
 from models.usuario import Usuario
 from middlewares.jwt_utils import get_current_user
 from middlewares.jwt_bearer import JWTBearer
@@ -17,6 +18,18 @@ router = APIRouter()
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_REPO = 'santiiander/proyectPaperK'
 GITHUB_API_URL = 'https://api.github.com/repos/{}/contents/{}'
+
+def get_unique_filename(folder, filename):
+    """
+    Genera un nombre de archivo único si ya existe en la carpeta.
+    """
+    name, extension = os.path.splitext(filename)
+    counter = 1
+    new_filename = filename
+    while os.path.exists(os.path.join(folder, new_filename)):
+        new_filename = f"{name}{counter}{extension}"
+        counter += 1
+    return new_filename
 
 # Crear Proyecto
 @router.post("/proyectos/", response_model=Proyecto, dependencies=[Depends(JWTBearer())])
@@ -31,17 +44,19 @@ def crear_proyecto_view(
     current_user: Usuario = Depends(get_current_user)
 ):
     try:
-        # Define the user folder path
-        user_folder = f"uploads/{current_user.id}"
-        
-        # Create the directory if it does not exist
-        os.makedirs(user_folder, exist_ok=True)
+        # Crear una carpeta única para el proyecto
+        project_folder = f"uploads/{current_user.id}/{nombre}"
+        os.makedirs(project_folder, exist_ok=True)
 
-        # Define file paths
-        archivo_pdf_path = os.path.join(user_folder, archivo_pdf.filename)
-        imagen_path = os.path.join(user_folder, imagen.filename)
+        # Generar nombres únicos para los archivos
+        archivo_pdf_filename = get_unique_filename(project_folder, archivo_pdf.filename)
+        imagen_filename = get_unique_filename(project_folder, imagen.filename)
 
-        # Save the files to the local filesystem
+        # Definir las rutas de los archivos
+        archivo_pdf_path = os.path.join(project_folder, archivo_pdf_filename)
+        imagen_path = os.path.join(project_folder, imagen_filename)
+
+        # Guardar los archivos en el sistema de archivos local
         with open(archivo_pdf_path, "wb") as f:
             f.write(archivo_pdf.file.read())
 
@@ -85,19 +100,19 @@ def crear_proyecto_view(
             if response.status_code not in [200, 201]:
                 raise HTTPException(status_code=response.status_code, detail=response.text)
 
-        # Define GitHub paths respetando la estructura de carpetas
-        archivo_pdf_github_path = f"{user_folder}/{archivo_pdf.filename}"
-        imagen_github_path = f"{user_folder}/{imagen.filename}"
+        # Definir las rutas de GitHub
+        archivo_pdf_github_path = f"{project_folder}/{archivo_pdf_filename}"
+        imagen_github_path = f"{project_folder}/{imagen_filename}"
 
-        # Upload files to GitHub
+        # Subir archivos a GitHub
         upload_to_github(archivo_pdf_path, archivo_pdf_github_path)
         upload_to_github(imagen_path, imagen_github_path)
 
         proyecto_data = ProyectoBase(
             nombre=nombre,
             descripcion=descripcion,
-            archivo_pdf=archivo_pdf_github_path,  # Use the GitHub file path
-            imagen=imagen_github_path,  # Use the GitHub file path
+            archivo_pdf=archivo_pdf_github_path,
+            imagen=imagen_github_path,
             usuario_nombre=usuario_nombre,
             contenido_sensible=contenido_sensible
         )
@@ -105,7 +120,6 @@ def crear_proyecto_view(
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 @router.get("/proyectos/sensibles", response_model=list[Proyecto], dependencies=[Depends(JWTBearer())])
 def get_proyectos_sensibles_view(
