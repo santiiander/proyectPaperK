@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from config.database import Base
 from models.like import likes_table
@@ -13,4 +14,5 @@ class Usuario(Base):
     descripcion = Column(String(255))
     proyectos = relationship("Proyecto", back_populates="usuario")
     reset_code = Column(Integer, nullable=True)
+    fecha_creacion = Column(DateTime, default=func.now())  # Remove the comma at the end
     liked_projects = relationship("Proyecto", secondary=likes_table, back_populates="liked_by_users")
