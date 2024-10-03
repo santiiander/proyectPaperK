@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, HTTPException, Depends, status, Form
 from sqlalchemy.orm import Session
 from schemas.usuario import UsuarioCreate, UsuarioLogin
 from services.usuario import crear_usuario, autenticar_usuario, hash_password
@@ -12,12 +12,14 @@ import firebase_admin
 from firebase_admin import auth
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
-from fastapi import Form 
 from dotenv import load_dotenv
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 router = APIRouter()
+
+# Variable global para almacenar el número de usuarios conectados
+connected_users = 0
 
 @router.post("/register")
 async def register(usuario: UsuarioCreate, db: Session = Depends(database.get_db)):
@@ -30,16 +32,30 @@ async def register(usuario: UsuarioCreate, db: Session = Depends(database.get_db
 
 @router.post("/login")
 async def login(usuario: UsuarioLogin, db: Session = Depends(database.get_db)):
+    global connected_users
     user = autenticar_usuario(db=db, usuario=usuario)
     if not user:
         raise HTTPException(status_code=401, detail="Credenciales incorrectas")
     
-    access_token_expires = timedelta(minutes=30)
+    access_token_expires = timedelta(minutes=60)
     access_token = create_access_token(
         data={"sub": user.id}, expires_delta=access_token_expires
     )
     
+    connected_users += 1
+    
     return {"access_token": access_token, "token_type": "bearer", "email": user.email}
+
+@router.post("/logout")
+async def logout(token: str = Depends(oauth2_scheme)):
+    global connected_users
+    connected_users = max(0, connected_users - 1)
+    return {"message": "Sesión cerrada exitosamente"}
+
+@router.get("/connected-users")
+async def get_connected_users():
+    global connected_users
+    return {"connected_users": connected_users}
 
 @router.post("/forgot-password")
 async def forgot_password(email: str, db: Session = Depends(database.get_db)):
@@ -72,6 +88,7 @@ class GoogleLoginRequest(BaseModel):
 
 @router.post("/login-google")
 async def login_with_google(id_token: str = Form(...), db: Session = Depends(database.get_db)):
+    global connected_users
     if not id_token:
         raise HTTPException(status_code=400, detail="Token de ID no proporcionado")
 
@@ -92,6 +109,7 @@ async def login_with_google(id_token: str = Form(...), db: Session = Depends(dat
             access_token = create_access_token(
                 data={"sub": user.id}, expires_delta=access_token_expires
             )
+            connected_users += 1
             return {"access_token": access_token, "token_type": "bearer", "email": user.email}
         
         # Si el usuario no existe, crear un nuevo usuario
@@ -108,6 +126,7 @@ async def login_with_google(id_token: str = Form(...), db: Session = Depends(dat
         access_token = create_access_token(
             data={"sub": new_user.id}, expires_delta=access_token_expires
         )
+        connected_users += 1
         return {"access_token": access_token, "token_type": "bearer", "email": new_user.email}
 
     except firebase_admin.exceptions.FirebaseError as e:
