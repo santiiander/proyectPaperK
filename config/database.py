@@ -4,7 +4,8 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 # Cambia a mysql+mysqlconnector para usar el controlador correcto
 #DATABASE_URL = "mysql+mysqlconnector://root:DILatLZGgqQCqPQnKbTnoGANnNtWifyJ@autorack.proxy.rlwy.net:13514/railway"
-DATABASE_URL = "mysql+mysqlconnector://root:PcPnStgJJgiIstrYcBlPAfnEhUAVnxDF@autorack.proxy.rlwy.net:50259/railway"
+#DATABASE_URL = "mysql+mysqlconnector://root:PcPnStgJJgiIstrYcBlPAfnEhUAVnxDF@autorack.proxy.rlwy.net:50259/railway"
+DATABASE_URL = "mysql+mysqlconnector://root:wCGHgMTPenSZbBYJaERRZrwKsxJaZAHQ@junction.proxy.rlwy.net:15133/railway"
 #Comentarionuevo con db  test comentario xd
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
